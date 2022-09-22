@@ -4,6 +4,7 @@ function pier=Get2020PierData(date_start,date_end)
 %pier record.  Path is hardcoded here; better practice would be to pass in
 %a path. But I'll leave that to you!
 %
+%ALB change 09/22/2022
 %MHA SIO211a
 %8/3/2022
 
