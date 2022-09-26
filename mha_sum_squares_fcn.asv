@@ -7,8 +7,8 @@ fs=nan(1,n); %Make an array for the answer
 c=1; %initialize an index
 fs(1)=1.^2; %and initialize the first one.
 
-%A while loop.
-while c<n % Execute while c is less than n.
+
+while c<n %
     fs(c+1)=fs(c)+(c+1).^2; %compute the next one and add it on.
     c=c+1; %increment the counter.
 end
