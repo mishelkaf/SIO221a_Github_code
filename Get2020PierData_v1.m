@@ -1,21 +1,14 @@
-function pier=Get2020PierData(date_start,date_end,file)
-%function pier=Get2020PierData(date_start,date_end,file)
+function pier=Get2020PierData(date_start,date_end)
+%function pier=Get2020PierData(date_start,date_end)
 %Return temperature and pressure and time (datenum format) from the 2020
-%pier record.  
-%
+%pier record.  Path is hardcoded here; better practice would be to pass in
+%a path. But I'll leave that to you!
 %
 %ALB change 09/22/2022
 %MHA SIO211a
 %8/3/2022
-% MHA: v2: include option to specify file path and name.
-
-if nargin < 3
-file='/Users/malford/GoogleDrive/Work/Projects/Teaching/sio221a/FromSarah/homework_2021/data/scripps_pier-2020.nc';
-end
-
-
 %
-%file='/Users/malford/GoogleDrive/Work/Projects/Teaching/sio221a/FromSarah/homework_2021/data/scripps_pier-2020.nc';
+file='/Users/malford/GoogleDrive/Work/Projects/Teaching/sio221a/FromSarah/homework_2021/data/scripps_pier-2020.nc';
 time=ncread(file,'time');
 temperature=ncread(file,'temperature');
 pressure=ncread(file,'pressure');
