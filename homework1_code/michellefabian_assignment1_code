@@ -1,0 +1,91 @@
+%%Assignment 1 SIO221a
+%for years 2005-2021, evaluate the following:
+
+for n = 1:17
+year = 2004+n
+
+
+%Firstyearevaluated = 2021;
+    yearstr=num2str(year);
+
+%% Read file
+
+    scripps_pier_datafile = "https://thredds.sccoos.org/thredds/dodsC/autoss/scripps_pier-"+ yearstr + ".nc";
+    scripps_pier_datafile
+    piertime=ncread(scripps_pier_datafile,'time');
+    piertemp=ncread(scripps_pier_datafile,'temperature');
+    A=ncinfo(scripps_pier_datafile);
+    A.Variables(1).Attributes.Value;  %What is this command doing???
+    %ncdisp(scripps_pier_datafile);
+    %Why did this not work when I set the url to the data url "http://172.21.224.45:8081/thredds/dodsC/autoss/scripps_pier-2021.nc"?
+    %numpy?
+    
+    %Convert the time
+    date0=datetime(1970,1,1); %This is saying that our initial date is 1/1/1970; Matlab suggested using datetime instead of datenum;
+    dnum=double(piertime)/3600/24+date0; %So here we must be converting all the timestamps from seconds to days.  And double is some sort of data storage command.
+    
+%% Plot temp data
+
+figure(2*n-1)
+
+    plot(dnum,piertemp,'r','LineWidth',1) %This is naming dnum, or the temp per day on the x axis and piertemp on the y axis, LineWidth is one of those stylistic commands to display your chart how you'd like
+    datetick('x','mmm','keepticks'); %Label the x-axis with month names, preserving the total number of ticks by using the 'keepticks' option because otherwise it would not label the months
+    set(gca,'FontSize',16)
+    xlabel("months of "+ yearstr,'FontSize',16)
+    ylabel('temperature (^oC)', 'FontSize',16)
+    
+ 
+   
+    %The following are observations regarding 2021 data:
+    %I noticed a datagap due to imperically linear line in the middle of
+    %September.  The plot appears roughly sinusodial with a period of 1 year.
+    %Between the months of January and April, the temperature seems to "flatten
+    %out" more, meaning there's less variance or fluctuation. 
+
+
+%% store array of means and stds
+
+
+  meantemp=mean(piertemp);
+  stdtemp=std(piertemp);
+
+    %For 2021 The meantemp is 17.27 deg C and the standard deviation is 2.45 deg C.
+    %This doesn't tell us much about the temperature over the year because the
+    %standard deviation is high.
+
+    Array = [year,meantemp,stdtemp] 
+    
+    %With more time I would try to refine this script to populate an array
+    %with all my data, have the appropriate sig figs, etc.
+
+   
+%%Probability Density Function
+   
+
+    figure (2*n)
+   
+    [number_per_bin,bins]=hist(piertemp,10:30); %Matlab recommends histogram instead of hist
+    plot(bins,number_per_bin/sum(number_per_bin),'LineWidth',3)
+    xlabel("temperature (^oC) in "+yearstr,'FontSize',14)
+    ylabel('probability density','FontSize',14)
+    
+    %Yes, this PDF looks very similar to the one done in class for 2020 data,
+    %where 15 deg c is the most common temperature with a very high probability
+    %and there is another spike of a larger temperature.  
+    
+    %Now compute the results for data from 2005-2021.  We already computed data
+    %for 2021, so I will write a script for data from 2005 -2020.  1st I will
+    %need to set some variables for the year.  
+   
+end
+
+%Homework Questions:
+%1. From the data, 2021 does not seem too different from years in the past.
+% I would need more data analysis techniques and tools to better present
+% all the data than what I have right now.  I would like to plot all the
+% data on one graph and also be able to denote a plot of the averages over
+% the years and standard deviations.  
+%2. I cannot tell which temperature spike is being referred to in August
+%2016.
+
+
